@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<!--
+  ============================================================
+  SertãoVR – Acervo Digital Imersivo do Pajeú
+  index.html — Arquivo principal da plataforma
+
+  COMO FUNCIONA:
+  Esta é uma Single Page Application (SPA) sem servidor.
+  Todo o conteúdo é renderizado via JavaScript (main.js).
+  Para alterar textos, vídeos e imagens, edite o arquivo:
+    assets/js/main.js → seção "EXPERIENCIAS"
+
+  ESTRUTURA DE ARQUIVOS:
+    index.html              ← este arquivo (não precisa editar)
+    assets/
+      css/style.css         ← estilos visuais
+      js/main.js            ← dados e lógica
+      img/                  ← imagens de capa das experiências
+  ============================================================
+-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO básico -->
+  <meta name="description"
+        content="Museu Virtual Imersivo do Sertão do Pajeú — experiências 360° sobre a Caatinga, Rio Pajeú, artesanato e cultura sertaneja, produzidas por estudantes da ETE Professora Célia Siqueira.">
+  <meta name="keywords"
+        content="realidade virtual, sertão, Pajeú, Caatinga, educação, museu virtual, São José do Egito, Pernambuco">
+  <meta name="author" content="ETE Professora Célia Siqueira – São José do Egito/PE">
+
+  <!-- Open Graph (compartilhamento em redes sociais) -->
+  <meta property="og:title" content="SertãoVR – Acervo Digital Imersivo do Pajeú">
+  <meta property="og:description" content="Explore o patrimônio natural e cultural do Sertão do Pajeú em 360°.">
+  <meta property="og:type" content="website">
+  <!-- <meta property="og:image" content="assets/img/og-cover.jpg"> -->
+
+  <title>SertãoVR – Acervo Digital Imersivo do Pajeú</title>
+
+  <!-- Fontes do Google (apenas 2 famílias, carregamento otimizado) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+  <!-- Folha de estilos principal -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+  <!-- ========== BARRA DE NAVEGAÇÃO ========== -->
+  <nav class="navbar" role="navigation" aria-label="Menu principal">
+    <div class="container">
+
+      <!-- Logo clicável -->
+      <a class="navbar-logo" href="#/" onclick="navegar('#/')">
+        SertãoVR <span>· Pajeú</span>
+      </a>
+
+      <!-- Links de navegação (desktop) -->
+      <ul class="navbar-links" id="navbar-links" role="list">
+        <li>
+          <a href="#/" data-pagina="inicio" onclick="navegar('#/')">
+            Início
+          </a>
+        </li>
+        <li>
+          <a href="#/acervo" data-pagina="acervo" onclick="navegar('#/acervo')">
+            Acervo
+          </a>
+        </li>
+        <li>
+          <a href="#/" data-pagina="inicio"
+             onclick="navegar('#/'); setTimeout(()=>document.getElementById('equipe')?.scrollIntoView({behavior:'smooth'}),100)">
+            Equipe
+          </a>
+        </li>
+        <li>
+          <a href="#/" data-pagina="inicio"
+             onclick="navegar('#/'); setTimeout(()=>document.getElementById('sobre')?.scrollIntoView({behavior:'smooth'}),100)">
+            Sobre
+          </a>
+        </li>
+      </ul>
+
+      <!-- Botão hamburguer (mobile) -->
+      <button class="navbar-toggle" id="menu-toggle"
+              aria-label="Abrir menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- ========== ÁREA PRINCIPAL (renderizada via JS) ========== -->
+  <main id="app" role="main">
+    <!-- O conteúdo é injetado aqui pelo main.js -->
+    <section class="secao" style="text-align:center; min-height:60vh; display:flex; align-items:center">
+      <div class="container">
+        <p style="font-size:2rem; margin-bottom:12px">🌵</p>
+        <p style="color:var(--cinza-texto)">Carregando o acervo…</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== RODAPÉ ========== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p class="footer-logo">SertãoVR · Acervo Digital Imersivo do Pajeú</p>
+      <p class="footer-texto">
+        Produzido pelos estudantes da ETE Professora Célia Siqueira<br>
+        São José do Egito · Pernambuco · Brasil<br>
+        Projeto apoiado pela FACEPE — Edital 19/2026
+      </p>
+      <nav class="footer-links" aria-label="Links do rodapé">
+        <a href="#/" onclick="navegar('#/')">Início</a>
+        <a href="#/acervo" onclick="navegar('#/acervo')">Acervo</a>
+        <a href="#/" onclick="navegar('#/'); setTimeout(()=>document.getElementById('sobre')?.scrollIntoView({behavior:'smooth'}),100)">
+          Sobre
+        </a>
+        <a href="#/" onclick="navegar('#/'); setTimeout(()=>document.getElementById('equipe')?.scrollIntoView({behavior:'smooth'}),100)">
+          Equipe
+        </a>
+      </nav>
+      <p class="footer-copy">
+        Acervo digital permanente · Acesso gratuito ·
+        Conteúdo produzido por estudantes da rede pública
+      </p>
+    </div>
+  </footer>
+
+  <!-- Script principal (carregado no final para melhor performance) -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+</html>
