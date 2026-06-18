@@ -128,18 +128,18 @@ const EQUIPE = [
   {
     avatar: "👩‍💼",
     nome: "Estudante 1",
-    papel: "Gestão e Administração",
+    papel: "Silas Emmanoel Leandro Lima de Brito",
     descricao: "Responsável pelo planejamento, cronograma, relatórios e organização da Mostra Tecnológica."
   },
   {
     avatar: "🔍",
-    nome: "Estudante 2",
+    nome: "Ramon José Lima da Silva",
     papel: "Pesquisa e Conteúdo",
     descricao: "Coordena a pesquisa territorial, captura das cenas 360° e curadoria do acervo digital."
   },
   {
     avatar: "⚙️",
-    nome: "Estudante 3",
+    nome: "Pietro Bruno Nunes Leite da Silva",
     papel: "Tecnologia e Fabricação",
     descricao: "Cuida da modelagem 3D, impressão dos componentes e montagem dos Kits Educacionais."
   },
