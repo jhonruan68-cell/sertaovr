@@ -12,16 +12,16 @@
   /* Paleta do Sertão */
  :root {
   /* Paleta Pôr do sol sertanejo */
-  --areia:        #F4D9A8;  /* Fundo claro, cor de areia */
-  --areia-escura: #E0A458;  /* Bordas e separadores */
-  --terra:        #C8552D;  /* Cor principal de destaque */
-  --terra-escura: #7A2E10;  /* Hover e estados ativos */
-  --verde:        #4A7C59;  /* Cor secundária (caatinga) */
-  --azul:         #2C6E9B;  /* Links e botões secundários */
-  --ceu:          #FCE7CC;  /* Fundo de seções alternadas */
-  --branco:       #FFFBF5;  /* Fundo principal */
-  --preto-suave:  #2B1608;  /* Texto principal */
-  --cinza-texto:  #6B4226;  /* Texto secundário */
+  --areia:        #F4D9A8;          /* Fundo claro, cor de areia */
+  --areia-escura: #E0A458;          /* Bordas e separadores */
+  --terra:        #C8552D;          /* Cor principal de destaque */
+  --terra-escura: #7A2E10;          /* Hover e estados ativos */
+  --verde:        #4A7C59;          /* Cor secundária (caatinga) */
+  --azul:         #2C6E9B;          /* Links e botões secundários */
+  --ceu:          #FCE7CC;          /* Fundo de seções alternadas */
+  --branco:       #FFFBF5;          /* Fundo principal */
+  --preto-suave:  #2B1608;          /* Texto principal */
+  --cinza-texto:  #6B4226;          /* Texto secundário */
 
   /* Tipografia */
   --fonte-titulo: 'Playfair Display', Georgia, serif;
