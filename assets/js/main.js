@@ -223,8 +223,6 @@ function renderInicio() {
   document.title = "SertãoVR – Acervo Digital Imersivo do Pajeú";
   atualizarNavAtivo("inicio");
 
-  const totalAcessos = obterTotalAcessos();
-
   const app = document.getElementById("app");
   app.innerHTML = `
     <!-- HERO -->
@@ -304,8 +302,8 @@ function renderInicio() {
                 <span class="stat-label">Meses de produção</span>
               </div>
               <div class="stat-item">
-                <span class="stat-numero" id="contador-acessos">${totalAcessos}</span>
-                <span class="stat-label">Acessos registrados</span>
+                <span class="stat-numero">∞</span>
+                <span class="stat-label">Acesso gratuito permanente</span>
               </div>
             </div>
           </div>
@@ -458,7 +456,7 @@ function renderSobre() {
         <div class="divisor" style="margin-left:0"></div>
         <p style="color:var(--cinza-texto); line-height:1.8; margin-bottom:16px">
           O projeto adota a <strong>Aprendizagem Baseada em Projetos (ABP)</strong> como eixo
-          central. Os três estudantes bolsistas atuam como responsáveis reais, cada um lidera
+          central. Os três estudantes bolsistas atuam como responsáveis reais — cada um lidera
           um eixo específico — participando conjuntamente das etapas de campo, produção e avaliação.
         </p>
         <p style="color:var(--cinza-texto); line-height:1.8; margin-bottom:16px">
