@@ -121,39 +121,36 @@ const EXPERIENCIAS = [
 
 /* ============================================================
    DADOS DA EQUIPE
-   COMO EDITAR: altere nome, papel, descrição e emoji abaixo.
-   Para usar foto real: substitua o emoji pela tag <img>.
    ============================================================ */
 const EQUIPE = [
   {
-    avatar: "👩‍💼",
+    avatar: "👨‍💼",
     nome: "Silas Emmanoel Leandro Lima de Brito",
     papel: "Gestão e Administração",
-    descricao: "Responsável pelo planejamento, cronograma, relatórios e organização da Mostra Tecnológica."
+    descricao: "Responsável pelo planejamento, cronograma, relatórios e organização da Mostra Tecnológica. Lidera a análise de impacto socioeconômico do projeto."
   },
   {
     avatar: "🔍",
     nome: "Ramon José Lima da Silva",
     papel: "Pesquisa e Conteúdo",
-    descricao: "Coordena a pesquisa territorial, captura das cenas 360° e curadoria do acervo digital."
+    descricao: "Coordena a pesquisa territorial, as entrevistas com moradores e agricultores, a captura das cenas 360° e a curadoria do acervo digital."
   },
   {
     avatar: "⚙️",
     nome: "Pietro Bruno Nunes Leite da Silva",
     papel: "Tecnologia e Fabricação",
-    descricao: "Cuida da modelagem 3D, impressão dos componentes e montagem dos Kits Educacionais."
+    descricao: "Cuida da modelagem 3D no Tinkercad, impressão dos componentes no Espaço CRIA e montagem dos Kits Educacionais Imersivos."
   },
   {
     avatar: "🎓",
-    nome: "Maria José Leite Brasiliano",
+    nome: "Adriano José Lima dos Santos",
     papel: "Coordenação Geral",
-    descricao: "Maria José Leite Brasiliano orienta os bolsistas e gerencia o projeto junto à FACEPE."
+    descricao: "Coordenador geral do projeto. Orienta os bolsistas em todas as fases, gerencia as atividades junto à FACEPE e supervisiona a produção do acervo digital e dos kits."
   }
 ];
 
 /* ============================================================
    DADOS DOS PARCEIROS
-   COMO EDITAR: altere emoji, nome abaixo.
    ============================================================ */
 const PARCEIROS = [
   { emoji: "🏫", nome: "ETE Professora Célia Siqueira" },
@@ -163,11 +160,32 @@ const PARCEIROS = [
 ];
 
 /* ============================================================
-   ROTEADOR SIMPLES (SPA — Single Page Application)
-   Lê o hash da URL (#/acervo/caatinga) e renderiza a página
-   correta sem precisar de servidor.
+   CONTADOR DE ACESSOS
+   Usa localStorage para contar acessos únicos por sessão.
+   Compatível 100% com GitHub Pages (sem servidor).
    ============================================================ */
+function registrarAcesso() {
+  try {
+    const hoje = new Date().toISOString().slice(0, 10); // "2026-06-27"
+    const chave = "sertaovr_acesso_" + hoje;
+    const jaContou = sessionStorage.getItem("sertaovr_sessao_contada");
+    if (!jaContou) {
+      const total = parseInt(localStorage.getItem("sertaovr_total_acessos") || "0") + 1;
+      localStorage.setItem("sertaovr_total_acessos", total);
+      sessionStorage.setItem("sertaovr_sessao_contada", "1");
+    }
+  } catch(e) { /* silencia erros em modo privado */ }
+}
 
+function obterTotalAcessos() {
+  try {
+    return parseInt(localStorage.getItem("sertaovr_total_acessos") || "1");
+  } catch(e) { return 1; }
+}
+
+/* ============================================================
+   ROTEADOR SIMPLES (SPA)
+   ============================================================ */
 function router() {
   const hash = window.location.hash || "#/";
   const partes = hash.replace("#", "").split("/").filter(Boolean);
@@ -183,15 +201,15 @@ function router() {
     } else {
       renderErro();
     }
+  } else if (partes[0] === "sobre") {
+    renderSobre();
   } else {
     renderErro();
   }
 
-  // Volta ao topo a cada navegação
   window.scrollTo({ top: 0, behavior: "instant" });
 }
 
-/* Navegar para uma rota */
 function navegar(rota) {
   window.location.hash = rota;
 }
@@ -204,6 +222,8 @@ function navegar(rota) {
 function renderInicio() {
   document.title = "SertãoVR – Acervo Digital Imersivo do Pajeú";
   atualizarNavAtivo("inicio");
+
+  const totalAcessos = obterTotalAcessos();
 
   const app = document.getElementById("app");
   app.innerHTML = `
@@ -241,7 +261,7 @@ function renderInicio() {
             <p>
               O <strong>SertãoVR</strong> é um projeto educacional desenvolvido por estudantes
               do curso técnico em Administração da ETE Professora Célia Siqueira, em
-              São José do Egito (PE), com apoio da FACEPE.
+              São José do Egito (PE), com apoio da FACEPE — Edital 19/2026.
             </p>
             <p>
               Nosso objetivo é usar a Realidade Virtual como ferramenta para registrar,
@@ -249,9 +269,19 @@ function renderInicio() {
               ao artesanato, do Rio Pajeú à economia local.
             </p>
             <p>
-              Todo o acervo é produzido pelos próprios estudantes: a pesquisa de campo,
-              a captura das cenas em 360°, a fabricação dos Kits Educacionais e a
-              organização deste museu virtual.
+              Todo o acervo é produzido pelos próprios estudantes no <strong>Espaço CRIA</strong>
+              da escola: a pesquisa de campo com moradores e agricultores, a captura das cenas
+              em 360°, a fabricação dos Kits Educacionais com impressora 3D e a organização
+              deste museu virtual.
+            </p>
+            <p>
+              As comunidades rurais que abrem suas histórias para os estudantes também recebem
+              o resultado: uma <strong>Mostra Itinerante</strong> e um Kit Educacional Imersivo
+              ficam permanentemente com cada comunidade visitada.
+            </p>
+            <p>
+              Um <strong>Guia de Replicação</strong> em PDF aberto será publicado ao final do
+              projeto, permitindo que qualquer escola pública reproduza o modelo sem custo adicional.
             </p>
             <button class="btn btn-primario" onclick="navegar('#/acervo')" style="margin-top:8px">
               Ver experiências →
@@ -274,8 +304,8 @@ function renderInicio() {
                 <span class="stat-label">Meses de produção</span>
               </div>
               <div class="stat-item">
-                <span class="stat-numero">∞</span>
-                <span class="stat-label">Acesso gratuito permanente</span>
+                <span class="stat-numero" id="contador-acessos">${totalAcessos}</span>
+                <span class="stat-label">Acessos registrados</span>
               </div>
             </div>
           </div>
@@ -302,12 +332,53 @@ function renderInicio() {
       </div>
     </section>
 
+    <!-- ENTREGÁVEIS DO PROJETO -->
+    <section class="secao secao-alternada" id="entregaveis">
+      <div class="container">
+        <h2 class="secao-titulo">O que o projeto entrega</h2>
+        <p class="secao-subtitulo">Resultados concretos produzidos pelos estudantes ao longo de 6 meses.</p>
+        <div class="divisor"></div>
+        <div class="entregaveis-grid">
+          <div class="entregavel-item">
+            <div class="entregavel-icone">🌐</div>
+            <h3>Museu Virtual</h3>
+            <p>Acervo digital permanente com 6 a 8 cenas imersivas em 360°, acessível gratuitamente por link público e QR Code.</p>
+          </div>
+          <div class="entregavel-item">
+            <div class="entregavel-icone">🥽</div>
+            <h3>Kits Educacionais</h3>
+            <p>10 visores VR de baixo custo fabricados no Espaço CRIA com papelão microondulado, componentes 3D e lentes biconvexas.</p>
+          </div>
+          <div class="entregavel-item">
+            <div class="entregavel-icone">🎪</div>
+            <h3>Mostra Tecnológica</h3>
+            <p>Evento aberto à comunidade escolar com demonstração dos kits e experiências imersivas, organizado pelos próprios bolsistas.</p>
+          </div>
+          <div class="entregavel-item">
+            <div class="entregavel-icone">🚌</div>
+            <h3>Mostra Itinerante</h3>
+            <p>Versão simplificada da Mostra levada às comunidades rurais visitadas durante a pesquisa. Um kit fica permanentemente com cada comunidade.</p>
+          </div>
+          <div class="entregavel-item">
+            <div class="entregavel-icone">📄</div>
+            <h3>Guia de Replicação</h3>
+            <p>PDF aberto com lista de materiais, arquivos STL para impressão 3D e metodologia completa para qualquer escola reproduzir o modelo.</p>
+          </div>
+          <div class="entregavel-item">
+            <div class="entregavel-icone">📊</div>
+            <h3>Relatório de Impacto</h3>
+            <p>Documento elaborado pelos bolsistas com análise de indicadores e avaliação de engajamento — competência direta do curso de Administração.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- EQUIPE -->
-    <section class="secao secao-alternada" id="equipe">
+    <section class="secao" id="equipe">
       <div class="container">
         <h2 class="secao-titulo">Nossa Equipe</h2>
         <p class="secao-subtitulo">
-          Estudantes e orientadores da ETE Professora Célia Siqueira que tornaram este projeto possível.
+          Estudantes e coordenador da ETE Professora Célia Siqueira que tornam este projeto possível.
         </p>
         <div class="divisor"></div>
         <div class="equipe-grid">
@@ -352,12 +423,81 @@ function renderAcervo() {
   `;
 }
 
+/* --- PÁGINA SOBRE --- */
+function renderSobre() {
+  document.title = "Sobre – SertãoVR";
+  atualizarNavAtivo("sobre");
+
+  const app = document.getElementById("app");
+  app.innerHTML = `
+    <div class="acervo-header">
+      <div class="container">
+        <h1>Sobre o SertãoVR</h1>
+        <p>Museu Virtual Imersivo do Sertão do Pajeú — ETE Professora Célia Siqueira</p>
+      </div>
+    </div>
+    <section class="secao">
+      <div class="container" style="max-width:820px">
+        <h2 class="secao-titulo" style="text-align:left">O problema que queremos resolver</h2>
+        <div class="divisor" style="margin-left:0"></div>
+        <p style="color:var(--cinza-texto); line-height:1.8; margin-bottom:16px">
+          São José do Egito fica no coração do Sertão do Pajeú, uma das regiões mais ricas
+          culturalmente de Pernambuco. A ETE Professora Célia Siqueira é a única escola técnica
+          do município e conta com um <strong>Espaço CRIA</strong> equipado, incluindo impressora 3D.
+        </p>
+        <p style="color:var(--cinza-texto); line-height:1.8; margin-bottom:16px">
+          Mesmo assim, o patrimônio natural e cultural do Pajeú — Caatinga, Rio Pajeú, saberes
+          tradicionais, artesanato e agroecologia — não tem registro digital organizado e acessível
+          produzido por estudantes da rede pública.
+        </p>
+        <p style="color:var(--cinza-texto); line-height:1.8; margin-bottom:40px">
+          O SertãoVR resolve isso colocando os próprios estudantes para criar.
+        </p>
+
+        <h2 class="secao-titulo" style="text-align:left">Como funciona</h2>
+        <div class="divisor" style="margin-left:0"></div>
+        <p style="color:var(--cinza-texto); line-height:1.8; margin-bottom:16px">
+          O projeto adota a <strong>Aprendizagem Baseada em Projetos (ABP)</strong> como eixo
+          central. Os três estudantes bolsistas atuam como responsáveis reais — cada um lidera
+          um eixo específico — participando conjuntamente das etapas de campo, produção e avaliação.
+        </p>
+        <p style="color:var(--cinza-texto); line-height:1.8; margin-bottom:16px">
+          As competências desenvolvidas dialogam diretamente com a BNCC para o Ensino Médio
+          (pensamento científico, cultura digital, empreendedorismo) e com o Itinerário Formativo
+          do curso técnico em Administração (gestão de projetos, organização de dados, análise
+          de impacto socioeconômico).
+        </p>
+        <p style="color:var(--cinza-texto); line-height:1.8; margin-bottom:40px">
+          Os Kits Educacionais Imersivos são fabricados com papelão microondulado de alta
+          resistência e componentes impressos em 3D no próprio Espaço CRIA — custo estimado
+          de menos de R$ 3,00 por unidade na estrutura principal — garantindo replicabilidade
+          para qualquer escola pública.
+        </p>
+
+        <h2 class="secao-titulo" style="text-align:left">Entregáveis e metas</h2>
+        <div class="divisor" style="margin-left:0"></div>
+        <div class="sobre-metas">
+          <div class="meta-item"><span class="meta-numero">6 a 8</span><span class="meta-label">cenas imersivas 360° publicadas</span></div>
+          <div class="meta-item"><span class="meta-numero">10</span><span class="meta-label">Kits Educacionais fabricados</span></div>
+          <div class="meta-item"><span class="meta-numero">300+</span><span class="meta-label">acessos ao acervo até o encerramento</span></div>
+          <div class="meta-item"><span class="meta-numero">100+</span><span class="meta-label">visitantes na Mostra Tecnológica</span></div>
+          <div class="meta-item"><span class="meta-numero">50+</span><span class="meta-label">participantes usando os kits na Mostra</span></div>
+          <div class="meta-item"><span class="meta-numero">1</span><span class="meta-label">Guia de Replicação em PDF aberto</span></div>
+        </div>
+
+        <div style="margin-top:48px; text-align:center">
+          <button class="btn btn-primario" onclick="navegar('#/acervo')">Explorar o Acervo →</button>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
 /* --- PÁGINA DE UMA EXPERIÊNCIA --- */
 function renderExperiencia(exp) {
   document.title = `${exp.titulo} – SertãoVR`;
   atualizarNavAtivo("acervo");
 
-  /* URL amigável para QR Code */
   const urlQR = `${window.location.origin}${window.location.pathname}#/acervo/${exp.id}`;
 
   const app = document.getElementById("app");
@@ -375,7 +515,6 @@ function renderExperiencia(exp) {
     </div>
 
     <div class="experiencia-conteudo">
-      <!-- VÍDEO 360° -->
       <div class="video-wrapper" style="margin-bottom:36px">
         <iframe
           src="https://www.youtube.com/embed/${exp.videoYouTube}?rel=0&modestbranding=1"
@@ -385,10 +524,8 @@ function renderExperiencia(exp) {
         </iframe>
       </div>
 
-      <!-- DESCRIÇÃO COMPLETA -->
       <p class="experiencia-descricao">${exp.descricaoCompleta}</p>
 
-      <!-- CURIOSIDADES -->
       <div class="curiosidades">
         <h3>🌵 Você Sabia?</h3>
         <ul>
@@ -396,7 +533,6 @@ function renderExperiencia(exp) {
         </ul>
       </div>
 
-      <!-- NAVEGAÇÃO -->
       <div class="nav-experiencia">
         <button class="btn btn-secundario" onclick="navegar('#/acervo')">
           ← Voltar ao Acervo
@@ -435,7 +571,6 @@ function renderErro() {
    HELPERS DE RENDERIZAÇÃO
    ============================================================ */
 
-/* Gera HTML de um card de experiência */
 function renderCardHTML(exp) {
   return `
     <div class="card" onclick="navegar('#/acervo/${exp.id}')" role="button" tabindex="0"
@@ -463,7 +598,6 @@ function renderCardHTML(exp) {
   `;
 }
 
-/* Gera HTML de um membro da equipe */
 function renderMembroHTML(m) {
   return `
     <div class="membro">
@@ -475,7 +609,6 @@ function renderMembroHTML(m) {
   `;
 }
 
-/* Gera HTML de um parceiro */
 function renderParceiroHTML(p) {
   return `
     <div class="parceiro">
@@ -485,7 +618,6 @@ function renderParceiroHTML(p) {
   `;
 }
 
-/* Atualiza qual link do navbar está ativo */
 function atualizarNavAtivo(pagina) {
   document.querySelectorAll(".navbar-links a").forEach(el => {
     el.classList.remove("ativo");
@@ -498,6 +630,9 @@ function atualizarNavAtivo(pagina) {
    ============================================================ */
 window.addEventListener("hashchange", router);
 window.addEventListener("DOMContentLoaded", () => {
+  /* Registrar acesso */
+  registrarAcesso();
+
   /* Menu hamburguer */
   const toggle = document.getElementById("menu-toggle");
   const links = document.getElementById("navbar-links");
@@ -505,7 +640,6 @@ window.addEventListener("DOMContentLoaded", () => {
     toggle.addEventListener("click", () => {
       links.classList.toggle("aberto");
     });
-    /* Fechar menu ao clicar num link */
     links.querySelectorAll("a").forEach(a => {
       a.addEventListener("click", () => links.classList.remove("aberto"));
     });
