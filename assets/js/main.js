@@ -367,7 +367,7 @@ function renderInicio() {
           <div class="entregavel-item">
             <div class="entregavel-icone">📊</div>
             <h3>Relatório de Impacto</h3>
-            <p>Documento elaborado pelos bolsistas com análise de indicadores e avaliação de engajamento — competência direta do curso de Administração.</p>
+            <p>Documento elaborado pelos bolsistas com análise de indicadores e avaliação de engajamento, competência direta do curso de Administração.</p>
           </div>
         </div>
       </div>
@@ -458,7 +458,7 @@ function renderSobre() {
         <div class="divisor" style="margin-left:0"></div>
         <p style="color:var(--cinza-texto); line-height:1.8; margin-bottom:16px">
           O projeto adota a <strong>Aprendizagem Baseada em Projetos (ABP)</strong> como eixo
-          central. Os três estudantes bolsistas atuam como responsáveis reais — cada um lidera
+          central. Os três estudantes bolsistas atuam como responsáveis reais, cada um lidera
           um eixo específico — participando conjuntamente das etapas de campo, produção e avaliação.
         </p>
         <p style="color:var(--cinza-texto); line-height:1.8; margin-bottom:16px">
